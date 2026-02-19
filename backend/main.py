@@ -1,9 +1,22 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import numpy as np
+from fastapi.middleware.cors import CORSMiddleware
 import pickle
+import numpy as np
+from pydantic import BaseModel
+
+
 
 app = FastAPI(title="Titanic Survival Prediction API")
+
+# ✅ Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all (safe for dev)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    # allow_origins=["http://localhost:5173", ]
+)
 
 # Load model
 with open("titanic.pkl", "rb") as f:
